@@ -50,7 +50,6 @@ These are the main steps of the setup:
   # Use a descriptive name for your cluster:
   #
   cluster.name: NameOfYourCluster
-  cluster.initial_master_nodes: ["opensearchnode1"]
   #
   # ------------------------------------ Node ------------------------------------
   #
@@ -88,8 +87,10 @@ These are the main steps of the setup:
   # The default list of hosts is ["127.0.0.1", "[::1]"]
   #
   discovery.seed_hosts: ["166.206.186.146","166.206.186.147","166.206.186.148"]
-  
   discovery.type: zen
+  #
+  # Bootstrap the cluster using an initial set of cluster-manager-eligible nodes:
+  cluster.initial_master_nodes: ["opensearchnode1"]
   
   node.max_local_storage_nodes: 3
   indices.query.bool.max_clause_count: 2147483647
@@ -106,6 +107,11 @@ These are the main steps of the setup:
 
   ```yml
   node.roles: [ cluster_manager ]
+  ```
+
+- If you want a node to be a **cluster manager eligible node** (node will behave as a data node but, in case the cluster manager node goes down, this node will take its place as the cluster mnanager), add the following configuration in *OpenSearch.yml*:
+ ```yml
+  node.roles: [ cluster_manager, data, ingest ]
   ```
 
 #### User configuration
